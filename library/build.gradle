@@ -17,7 +17,7 @@ ext {
     siteUrl = 'https://github.com/orogersilva/barcode-reader-android'
     gitUrl = 'https://github.com/orogersilva/barcode-reader-android.git'
 
-    libraryVersion = '0.2.0'
+    libraryVersion = '0.2.1'
 
     developerId = 'orogersilva'
     developerName = 'Roger Silva'
@@ -36,7 +36,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 2
-        versionName "0.2.0"
+        versionName "0.2.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
