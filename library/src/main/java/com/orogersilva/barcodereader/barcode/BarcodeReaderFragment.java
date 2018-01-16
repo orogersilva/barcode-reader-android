@@ -48,7 +48,43 @@ import java.util.List;
  * Created by t.tsilva on 15/01/18.
  */
 public class BarcodeReaderFragment extends Fragment implements View.OnTouchListener, BarcodeGraphicTracker.BarcodeGraphicTrackerListener {
+
     private static final String TAG = BarcodeReaderFragment.class.getSimpleName();
+
+    // region FIELDS
+
+    private static String mDeniedPermissionTitle;
+    private static String mDeniedPermissionMessage;
+    private static String mDenyButtonTitle;
+    private static String mTryAgainButtonTitle;
+    private static String mRequestPermissionRationaleMessage;
+    private static String mRequestPermissionRationaleCancelButtonTitle;
+    private static String mRequestPermissionRationaleSettingsButtonTitle;
+
+    // endregion
+
+    // region FACTORY METHODS
+
+    public static BarcodeReaderFragment newInstance(String deniedPermissionTitle,
+                                                    String deniedPermissionMessage,
+                                                    String denyButtonTitle,
+                                                    String tryAgainButtonTitle,
+                                                    String requestPermissionRationaleMessage,
+                                                    String requestPermissionRationaleCancelButtonTitle,
+                                                    String requestPermissionRationaleSettingsButtonTitle) {
+
+        mDeniedPermissionTitle = deniedPermissionTitle;
+        mDeniedPermissionMessage = deniedPermissionMessage;
+        mDenyButtonTitle = denyButtonTitle;
+        mTryAgainButtonTitle = tryAgainButtonTitle;
+        mRequestPermissionRationaleMessage = requestPermissionRationaleMessage;
+        mRequestPermissionRationaleCancelButtonTitle = requestPermissionRationaleCancelButtonTitle;
+        mRequestPermissionRationaleSettingsButtonTitle = requestPermissionRationaleSettingsButtonTitle;
+
+        return new BarcodeReaderFragment();
+    }
+
+    // endregion
 
     // intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
@@ -245,12 +281,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                     android.support.v7.app.AlertDialog.Builder alertDialogBuilder =
                             new android.support.v7.app.AlertDialog.Builder(getActivity());
 
-                    alertDialogBuilder.setTitle("Permissão negada")
-                            .setMessage("Sem a permissão para o uso da câmera, não será possível " +
-                                    "realizar a leitura do QR Code, necessário para prosseguir com " +
-                                    "o Pagamento Digital. Você tem certeza de que deseja negar essa " +
-                                    "permissão?")
-                            .setPositiveButton("Tentar novamente", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setTitle(mDeniedPermissionTitle)
+                            .setMessage(mDeniedPermissionMessage)
+                            .setPositiveButton(mTryAgainButtonTitle, new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
@@ -258,7 +291,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                                     requestCameraPermission();
                                 }
                             })
-                            .setNegativeButton("Negar", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(mDenyButtonTitle, new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
@@ -273,8 +306,8 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                     android.support.v7.app.AlertDialog.Builder alertDialogBuilder =
                             new android.support.v7.app.AlertDialog.Builder(getActivity());
 
-                    alertDialogBuilder.setMessage("Para realizar a leitura do QR Code, permita o acesso do Zaffari a sua câmera. Selecione Configurações > Permissões e habilite a câmera.")
-                            .setPositiveButton("Configurações", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setMessage(mRequestPermissionRationaleMessage)
+                            .setPositiveButton(mRequestPermissionRationaleSettingsButtonTitle, new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -288,7 +321,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                                     startActivityForResult(intent, RC_PERMISSION_SETTINGS);
                                 }
                             })
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(mRequestPermissionRationaleCancelButtonTitle, new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
