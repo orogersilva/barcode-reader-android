@@ -7,16 +7,16 @@
     android:background="#00ff00"
     android:orientation="vertical">
 
-    <info.androidhive.barcode.camera.CameraSourcePreview
+    <com.orogersilva.barcodereader.camera.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <info.androidhive.barcode.camera.GraphicOverlay
+        <com.orogersilva.barcodereader.camera.GraphicOverlay
             android:id="@+id/graphicOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </info.androidhive.barcode.camera.CameraSourcePreview>
+    </com.orogersilva.barcodereader.camera.CameraSourcePreview>
 
 </LinearLayout>
